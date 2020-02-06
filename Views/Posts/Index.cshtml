@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.PostParent)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Creation)
+                @Html.DisplayNameFor(model => model.PostCategorys)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -49,7 +49,10 @@
                 @Html.DisplayFor(modelItem => item.PostParent)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Creation)
+                @foreach (var postCat in item.PostCategorys)
+                {
+                    <p>@postCat.Category.Title</p>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)

@@ -22,7 +22,11 @@ namespace KSAdmin.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Posts.ToListAsync());
+            var posts = await _context.Posts
+                .Include(p => p.PostCategorys)
+                    .ThenInclude(pc => pc.Category)
+                .ToListAsync();
+            return View(posts);
         }
 
         // GET: Posts/Details/5
@@ -49,6 +53,8 @@ namespace KSAdmin.Controllers
             PostCreateViewModel pcvm = new PostCreateViewModel();
             pcvm.PostStatusOptions = Enum.GetValues(typeof(PostStatus));
             pcvm.Cats = await _context.Categorys.ToListAsync();
+            pcvm.Posts = await _context.Posts.ToListAsync();
+            pcvm.Posts.Insert(0, new Post { Id = 0, Title = "none" });
             return View(pcvm);
         }
 
@@ -57,11 +63,20 @@ namespace KSAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Slug,Title,Content,PostParent,Creation,Status")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,Slug,Title,Content,PostParent,Status")] Post post)
         {
             if (ModelState.IsValid)
             {
+                post.Creation = DateTime.Now.ToString("yyyyMMdd");
                 _context.Add(post);
+                var categoryIds = Request.Form["Categorys"];
+                if (categoryIds.Count() != 0)
+                {
+                    foreach (var categoryId in categoryIds)
+                    {
+                        post.PostCategorys.Add(new PostCategory { CategoryId = Int32.Parse(categoryId), PostId = post.Id });
+                    }
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
