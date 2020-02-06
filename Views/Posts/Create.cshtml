@@ -13,32 +13,32 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="newPost.Slug" class="control-label"></label>
-                <input asp-for="newPost.Slug" class="form-control" />
+                <label for="Slug" class="control-label">Slug</label>
+                <input id="Slug" name="Slug" class="form-control" />
                 <span asp-validation-for="newPost.Slug" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="newPost.Title" class="control-label"></label>
-                <input asp-for="newPost.Title" class="form-control" />
+                <label for="Title" class="control-label">Title</label>
+                <input id="Title" name="Title" class="form-control" />
                 <span asp-validation-for="newPost.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="newPost.Content" class="control-label"></label>
-                <textarea asp-for="newPost.Content" class="form-control" />
+                <label for="Content" class="control-label">Content</label>
+                @Html.TextArea("Content", "привет мир", new { @class = "form-control", col = 1 })
                 <span asp-validation-for="newPost.Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="newPost.PostParent" class="control-label"></label>
-                <input asp-for="newPost.PostParent" class="form-control" />
+                <label for="PostParent" class="control-label">Post Parent</label>
+                <input id="PostParent" name="PostParent" class="form-control" />
                 <span asp-validation-for="newPost.PostParent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="newPost.Creation" class="control-label"></label>
-                <input asp-for="newPost.Creation" class="form-control" />
+                <label for="Creation" class="control-label">Creation</label>
+                <input id="Creation" name="Creation" class="form-control" />
                 <span asp-validation-for="newPost.Creation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="newPost.Status" class="control-label"></label>
+                <label for="Status" class="control-label">Status</label>
                 @Html.DropDownList("Status", new SelectList(Model.PostStatusOptions))
                 <span asp-validation-for="newPost.Status" class="text-danger"></span>
             </div>

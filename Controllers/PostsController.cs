@@ -22,7 +22,7 @@ namespace KSAdmin.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            return View(_context.Posts.ToListAsync());
+            return View(await _context.Posts.ToListAsync());
         }
 
         // GET: Posts/Details/5
