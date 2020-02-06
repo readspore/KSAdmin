@@ -20,29 +20,18 @@ namespace KSAdmin.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasNoKey();
-            });
+            modelBuilder.Entity<PostCategory>()
+                .HasKey(t => new { t.PostId, t.CategoryId });
 
-            modelBuilder.Entity<Post>()
-                .HasKey(p => p.Id);
+            modelBuilder.Entity<PostCategory>()
+                .HasOne(pc => pc.Post)
+                .WithMany(s => s.PostCategorys)
+                .HasForeignKey(pc => pc.PostId);
 
-            modelBuilder.Entity<Category>()
-                .HasKey(p => p.Id);
-
-            //modelBuilder.Entity<PostCategory>()
-            //    .HasKey(t => new { t.PostId, t.CategoryId });
-
-            //modelBuilder.Entity<PostCategory>()
-            //    .HasOne(pc => pc.Post)
-            //    .WithMany(s => s.PostCategorys)
-            //    .HasForeignKey(pc => pc.PostId);
-
-            //modelBuilder.Entity<PostCategory>()
-            //    .HasOne(pc => pc.Category)
-            //    .WithMany(c => c.PostCategorys)
-            //    .HasForeignKey(pc => pc.CategoryId);
+            modelBuilder.Entity<PostCategory>()
+                .HasOne(pc => pc.Category)
+                .WithMany(c => c.PostCategorys)
+                .HasForeignKey(pc => pc.CategoryId);
         }
     }
 }

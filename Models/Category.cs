@@ -10,11 +10,11 @@ namespace KSAdmin.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
-        //public List<PostCategory> PostCategorys { get; set; }
+        public List<PostCategory> PostCategorys { get; set; }
 
-        //public Category()
-        //{
-        //    PostCategorys = new List<PostCategory>();
-        //}
+        public Category()
+        {
+            PostCategorys = new List<PostCategory>();
+        }
     }
 }

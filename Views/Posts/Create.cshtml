@@ -1,0 +1,58 @@
+﻿@model KSAdmin.ViewModels.PostCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="newPost.Slug" class="control-label"></label>
+                <input asp-for="newPost.Slug" class="form-control" />
+                <span asp-validation-for="newPost.Slug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newPost.Title" class="control-label"></label>
+                <input asp-for="newPost.Title" class="form-control" />
+                <span asp-validation-for="newPost.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newPost.Content" class="control-label"></label>
+                <textarea asp-for="newPost.Content" class="form-control" />
+                <span asp-validation-for="newPost.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newPost.PostParent" class="control-label"></label>
+                <input asp-for="newPost.PostParent" class="form-control" />
+                <span asp-validation-for="newPost.PostParent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newPost.Creation" class="control-label"></label>
+                <input asp-for="newPost.Creation" class="form-control" />
+                <span asp-validation-for="newPost.Creation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newPost.Status" class="control-label"></label>
+                @Html.DropDownList("Status", new SelectList(Model.PostStatusOptions))
+                <span asp-validation-for="newPost.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

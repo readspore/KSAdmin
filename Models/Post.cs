@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,13 +14,23 @@ namespace KSAdmin.Models
         public string Slug { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public int PostParent { get; set; }
+
+        public int? PostParent { get; set; }
+        [BindNever]
         public string Creation { get; set; }
-        public string Status { get; set; }
-        //public List<PostCategory> PostCategorys { get; set; }
-        //public Post()
-        //{
-        //    PostCategorys = new List<PostCategory>();
-        //}
+
+        [Display(Name = "Статус записи")]
+        public PostStatus? Status { get; set; }
+        public List<PostCategory> PostCategorys { get; set; }
+        public Post()
+        {
+            PostCategorys = new List<PostCategory>();
+        }
     }
+    public enum PostStatus
+    {
+        Опубликовано=1,
+        Черновик=2
+    }
+
 }
