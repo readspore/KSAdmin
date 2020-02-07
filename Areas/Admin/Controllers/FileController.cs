@@ -108,12 +108,23 @@ namespace KSAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<JsonResult> ShowFileManager(int page = 1, int perPage = 50)
         {
-            return Json(await db.Files.Skip((page - 1) * perPage).Take(perPage).ToListAsync());
+            return Json(await db.Files.OrderByDescending(f => f.Id).Skip((page - 1) * perPage).Take(perPage).ToListAsync());
         }
 
         public ActionResult GetUploadFilesForm()
         {
             return PartialView("_UploadFilesForm");
+        }
+
+        public ActionResult tt()
+        {
+            return Json(new { foo = "bar", method = "get" });
+        }
+
+        [HttpPost]
+        public ActionResult tt(int? id = 0)
+        {
+            return Json(new { foo = "bar", method = "post" });
         }
     }
 }
