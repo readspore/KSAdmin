@@ -1,0 +1,72 @@
+﻿@model KSAdmin.Areas.Admin.ViewModels.PostCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="Slug" class="control-label">Slug</label>
+                <input id="Slug" name="Slug" class="form-control" />
+                <span asp-validation-for="newPost.Slug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Title" class="control-label">Title</label>
+                <input id="Title" name="Title" class="form-control" />
+                <span asp-validation-for="newPost.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Content" class="control-label">Content</label>
+                @Html.TextArea("Content", "привет мир", new { @class = "form-control", col = 1 })
+                <span asp-validation-for="newPost.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="PostParent" class="control-label">Post Parent</label>
+                @Html.DropDownList("PostParent", 
+                    new SelectList(Model.Posts, "Id", "Title", 0), 
+                    null, 
+                    new {  @class = "form-control"}
+                )
+                <span asp-validation-for="newPost.PostParent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Categorys" class="control-label">Post Categorys</label>
+                @Html.DropDownList(
+                   "Categorys", 
+                   new SelectList(Model.Cats, "Id", "Title", 0), 
+                   null,
+                   new { multiple = "true", @class = "form-control"}
+                )
+                <span asp-validation-for="newPost.PostParent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Creation" class="control-label">Creation</label>
+                <input id="Creation" name="Creation" class="form-control" />
+                <span asp-validation-for="newPost.Creation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Status" class="control-label">Status</label>
+                @Html.DropDownList("Status", new SelectList(Model.PostStatusOptions))
+                <span asp-validation-for="newPost.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
