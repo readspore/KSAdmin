@@ -72,7 +72,7 @@ namespace KSAdmin.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Panel", new { area = "Admin" });
                     }
                 }
                 else
