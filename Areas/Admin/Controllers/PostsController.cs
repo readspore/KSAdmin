@@ -72,7 +72,6 @@ namespace KSAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                post.MainImage = new FileModel() { Id = post.MainImageId };
                 post.Creation = DateTime.Now.ToString("yyyyMMdd");
                 _context.Add(post);
                 var categoryIds = Request.Form["Categorys"];
@@ -102,17 +101,6 @@ namespace KSAdmin.Areas.Admin.Controllers
                             .Include(p => p.MainImage)
                             .ToList()
                             .FirstOrDefault();
-
-            //.Include(post => post.MainImage).ThenInclude(img => img.Id == post.MainImageId).Where(p=>p.Id == id).ToList().First();
-
-            //var post = _context.Posts
-            //    .Join(
-            //        _context.Files,
-            //        p => p.MainImageId,
-            //        f => f.Id,
-            //        (p, f) => new { Id = f.Id, Name = f.Name, Path = f.Path, }
-            //    ).Where(p => p.Id == id);
-            var s = post.GetType();
             if (post == null)
             {
                 return NotFound();

@@ -25,7 +25,7 @@ namespace KSAdmin.Areas.Admin.Models
         public List<PostCategory> PostCategorys { get; set; }
         public int MainImageId { get; set; }
         //[NotMapped]
-        [ForeignKey("FileModel")]
+        [ForeignKey("MainImageId")]
         public FileModel MainImage { get; set; }
         public Post()
         {
