@@ -25,7 +25,7 @@ namespace KSAdmin.Areas.Admin.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categorys.ToListAsync());
+            return View(await _context.Categorys.OrderByDescending(c => c.Id).ToListAsync());
         }
 
         // GET: Categories/Details/5

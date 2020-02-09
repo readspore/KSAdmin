@@ -30,6 +30,7 @@ namespace KSAdmin.Areas.Admin.Controllers
             var posts = await _context.Posts
                 .Include(p => p.PostCategorys)
                     .ThenInclude(pc => pc.Category)
+                .OrderByDescending(p => p.Id)
                 .ToListAsync();
             return View(posts);
         }
