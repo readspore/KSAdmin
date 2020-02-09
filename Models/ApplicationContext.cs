@@ -32,6 +32,11 @@ namespace KSAdmin.Models
                 .HasOne(pc => pc.Category)
                 .WithMany(c => c.PostCategorys)
                 .HasForeignKey(pc => pc.CategoryId);
+
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.MainImage)
+                .WithMany(fm => fm.Posts)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
