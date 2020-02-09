@@ -12,6 +12,7 @@ namespace KSAdmin.Areas.Admin.Models
         public string Format { get; set; }
         public string Path { get; set; }
         public string Creation { get; set; }
+        public List<Post> Post { get; set; }
         //public string Caption { get; set; }
     }
 }

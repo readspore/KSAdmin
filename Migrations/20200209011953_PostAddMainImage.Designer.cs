@@ -4,14 +4,16 @@ using KSAdmin.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KSAdmin.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200209011953_PostAddMainImage")]
+    partial class PostAddMainImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,6 +58,9 @@ namespace KSAdmin.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Files");
@@ -77,9 +82,6 @@ namespace KSAdmin.Migrations
                     b.Property<int?>("FileModel")
                         .HasColumnType("int");
 
-                    b.Property<int>("MainImageId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PostParent")
                         .HasColumnType("int");
 
@@ -94,7 +96,9 @@ namespace KSAdmin.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FileModel");
+                    b.HasIndex("FileModel")
+                        .IsUnique()
+                        .HasFilter("[FileModel] IS NOT NULL");
 
                     b.ToTable("Posts");
                 });
@@ -316,8 +320,8 @@ namespace KSAdmin.Migrations
             modelBuilder.Entity("KSAdmin.Areas.Admin.Models.Post", b =>
                 {
                     b.HasOne("KSAdmin.Areas.Admin.Models.FileModel", "MainImage")
-                        .WithMany("Post")
-                        .HasForeignKey("FileModel");
+                        .WithOne("Post")
+                        .HasForeignKey("KSAdmin.Areas.Admin.Models.Post", "FileModel");
                 });
 
             modelBuilder.Entity("KSAdmin.Areas.Admin.Models.PostCategory", b =>

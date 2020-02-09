@@ -30,7 +30,6 @@
                         <img src="#" alt="" id="MainImageSrc" />
                     </div>
                 </div>
-                <span asp-validation-for="newPost.MainImageId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Content" class="control-label">Content</label>
@@ -55,11 +54,6 @@
                    new { multiple = "true", @class = "form-control" }
                 )
                 <span asp-validation-for="newPost.PostParent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Creation" class="control-label">Creation</label>
-                <input id="Creation" name="Creation" class="form-control" />
-                <span asp-validation-for="newPost.Creation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Status" class="control-label">Status</label>
