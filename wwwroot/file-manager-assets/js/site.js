@@ -55,13 +55,15 @@ var pdFileManager = {
     },
     closeManager: (e) => {
         e.preventDefault();
+        if (!$(e.target).closest('.hover-tile__fade-toggle').find('[name="select-to-choose"]').prop('checked')) {
+            return;
+        }
         document.body.dispatchEvent(pdFileManager.events['eBeforeClose']);
         $('#pdFileManagerModal').modal("hide");
         document.body.dispatchEvent(pdFileManager.events['eAfterClose']);
-        console.log("closeManager", pdFileManager.openingManagerSetting.onCloseFunc, pdFileManager.selectedData);
-        //try {
+        try {
             pdFileManager.openingManagerSetting.onCloseFunc(pdFileManager.selectedData);
-        //} catch (err) { }
+        } catch (err) { }
     },
     setFiles: function () {
         if (pdFileManager.data.length === 0)
@@ -209,6 +211,7 @@ var pdFileManager = {
                     processData: false,
                     data: data,
                     success: function () {
+                        pdFileManager.addMsg("Успешно загружено");
                         $("#uploadFile").val("");
                         document.querySelector("#uploadFile").files.length;
                         $('#pdFileManagerModal #pd-all-files').empty();
@@ -351,7 +354,7 @@ var pdFileManager = {
     },
     addMsg: (msgText, msgTitle = "Уведомление", msgTitleClass = '') => {
         let msgHTML = `
-          <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="20000" data-pd-selectro-attr>
+          <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" data-pd-selectro-attr>
               <div class="toast-header">
                 <strong class="mr-auto ${msgTitleClass}">${msgTitle}</strong>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
