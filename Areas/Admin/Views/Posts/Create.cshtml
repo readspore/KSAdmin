@@ -23,26 +23,36 @@
                 <span asp-validation-for="newPost.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label for="MainImageId" class="control-label">Main Image</label>
+                <input id="MainImageId" name="MainImageId" class="form-control" />
+                <div class="img-wrap-1" onclick="pdChooseMainImg()">
+                    <div class="img-wrap-2">
+                        <img src="#" alt="" id="MainImageSrc" />
+                    </div>
+                </div>
+                <span asp-validation-for="newPost.MainImageId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label for="Content" class="control-label">Content</label>
                 @Html.TextArea("Content", "привет мир", new { @class = "form-control", col = 1 })
                 <span asp-validation-for="newPost.Content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="PostParent" class="control-label">Post Parent</label>
-                @Html.DropDownList("PostParent", 
-                    new SelectList(Model.Posts, "Id", "Title", 0), 
-                    null, 
-                    new {  @class = "form-control"}
+                @Html.DropDownList("PostParent",
+                    new SelectList(Model.Posts, "Id", "Title", 0),
+                    null,
+                    new { @class = "form-control" }
                 )
                 <span asp-validation-for="newPost.PostParent" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Categorys" class="control-label">Post Categorys</label>
                 @Html.DropDownList(
-                   "Categorys", 
-                   new SelectList(Model.Cats, "Id", "Title", 0), 
+                   "Categorys",
+                   new SelectList(Model.Cats, "Id", "Title", 0),
                    null,
-                   new { multiple = "true", @class = "form-control"}
+                   new { multiple = "true", @class = "form-control" }
                 )
                 <span asp-validation-for="newPost.PostParent" class="text-danger"></span>
             </div>
@@ -70,3 +80,23 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<code>
+    <script>
+        function pdChooseMainImg() {
+            pdFileManager.opentManager({
+                multiple: false,
+                onCloseFunc: (choosedImg) => {
+                    console.log(choosedImg);
+                    if (choosedImg.length == 0) {
+                        $('#MainImageId').val("");
+                        $('#MainImageSrc').attr("src", "");
+                    } else {
+                       $('#MainImageId').val(choosedImg[0].id);
+                       $('#MainImageSrc').attr("src", choosedImg[0].path);
+                    }
+                }
+            });
+        }
+    </script>
+</code>

@@ -58,9 +58,10 @@ var pdFileManager = {
         document.body.dispatchEvent(pdFileManager.events['eBeforeClose']);
         $('#pdFileManagerModal').modal("hide");
         document.body.dispatchEvent(pdFileManager.events['eAfterClose']);
-        try {
+        console.log("closeManager", pdFileManager.openingManagerSetting.onCloseFunc, pdFileManager.selectedData);
+        //try {
             pdFileManager.openingManagerSetting.onCloseFunc(pdFileManager.selectedData);
-        } catch (err) { }
+        //} catch (err) { }
     },
     setFiles: function () {
         if (pdFileManager.data.length === 0)
@@ -118,7 +119,7 @@ var pdFileManager = {
     },
     selectFile: (fileId) => {
         if (!pdFileManager.openingManagerSetting.multiple) {
-            pdFileManager.resetAllSelections();
+            pdFileManager.resetAllSelections(fileId);
         }
         if ($(`[data-pd-image-id="${fileId}"] [name="select-to-choose"]`).prop('checked')) {
             pdFileManager.selectedData.push(pdFileManager.data.find(file => file.id == fileId));

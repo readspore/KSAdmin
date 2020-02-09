@@ -22,6 +22,8 @@ namespace KSAdmin.Areas.Admin.Models
         [Display(Name = "Статус записи")]
         public PostStatus? Status { get; set; }
         public List<PostCategory> PostCategorys { get; set; }
+        public int MainImageId { get; set; }
+        public FileModel MainImage { get; set; }
         public Post()
         {
             PostCategorys = new List<PostCategory>();

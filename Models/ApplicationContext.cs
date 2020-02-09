@@ -14,7 +14,6 @@ namespace KSAdmin.Models
             : base(options)
         {
             //Database.EnsureDeleted();   // удаляем бд со старой схемой
-
             //Database.EnsureCreated();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
