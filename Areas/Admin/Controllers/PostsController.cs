@@ -99,13 +99,21 @@ namespace KSAdmin.Areas.Admin.Controllers
             var post = _context.Posts
                             .Where(p => p.Id == id)
                             .Include(p => p.MainImage)
+                            .Include(p => p.PostCategorys)
                             .ToList()
                             .FirstOrDefault();
             if (post == null)
             {
                 return NotFound();
             }
-            return View(post);
+            PostEditViewModel pevm = new PostEditViewModel();
+            pevm.thePost = post;
+            pevm.SelectedCats = post.PostCategorys.Select(pc => pc.CategoryId).ToList<int>();
+            pevm.PostStatusOptions = Enum.GetValues(typeof(PostStatus));
+            pevm.Cats = await _context.Categorys.ToListAsync();
+            pevm.Posts = await _context.Posts.ToListAsync();
+            pevm.Posts.Insert(0, new Post { Id = 0, Title = "none" });
+            return View(pevm);
         }
 
         // POST: Posts/Edit/5
@@ -125,6 +133,14 @@ namespace KSAdmin.Areas.Admin.Controllers
                 try
                 {
                     _context.Update(post);
+                    var categoryIds = Request.Form["Categorys"];
+                    if (categoryIds.Count() != 0)
+                    {
+                        foreach (var categoryId in categoryIds)
+                        {
+                            post.PostCategorys.Add(new PostCategory { CategoryId = Int32.Parse(categoryId), PostId = post.Id });
+                        }
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

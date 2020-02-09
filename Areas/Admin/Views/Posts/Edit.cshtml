@@ -1,4 +1,4 @@
-﻿@model KSAdmin.Areas.Admin.Models.Post
+﻿@model KSAdmin.Areas.Admin.ViewModels.PostEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,39 +12,59 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
+                <label for="Slug" class="control-label">Slug</label>
+                <input id="Slug" name="Slug" value="@Model.thePost.Slug" class="form-control" />
+                <span asp-validation-for="@Model.thePost.Slug" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label for="Title" class="control-label">Title</label>
+                <input id="Title" name="Title" value="@Model.thePost.Title" class="form-control" />
+                <span asp-validation-for="@Model.thePost.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
+                <label for="MainImageId" class="control-label">Main Image</label>
+                <input id="MainImageId" name="MainImageId" value="@Model.thePost.MainImageId" class="form-control" type="hidden" />
+                <div class="img-wrap-1 border-2-blue m-2" onclick="pdChooseMainImg()">
+                    <div class="img-wrap-2">
+                        <img src="@Model.thePost.MainImage?.Path" alt="" id="MainImageSrc" />
+                    </div>
+                </div>
+            </div>
+            img
+            <div class="form-group">
+                <label for="Content" class="control-label">Content</label>
+                @Html.TextArea("Content", "привет мир", new { @class = "form-control", col = 1 })
+                <span asp-validation-for="@Model.thePost.Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PostParent" class="control-label"></label>
-                <input asp-for="PostParent" class="form-control" />
-                <span asp-validation-for="PostParent" class="text-danger"></span>
+                <label for="PostParent" class="control-label">Post Parent</label>
+                @Html.DropDownList("PostParent",
+                    new SelectList(Model.Posts, "Id", "Title", "1"),
+                    null,
+                    new { @class = "form-control" }
+                )
+                <span asp-validation-for="@Model.thePost.PostParent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Creation" class="control-label"></label>
-                <input asp-for="Creation" class="form-control" />
-                <span asp-validation-for="Creation" class="text-danger"></span>
+                <label for="Categorys" class="control-label">Post Categorys</label>
+              
+                @Html.DropDownList(
+                   "Categorys",
+                   new MultiSelectList(Model.Cats, "Id", "Title", Model.SelectedCats),
+                   null,
+                   new { multiple="multiple", @class = "form-control" }
+                )
+               
+                <span asp-validation-for="@Model.thePost.PostParent" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <label for="Status" class="control-label">Status</label>
+                @Html.DropDownList("Status", new SelectList(Model.PostStatusOptions))
+                <span asp-validation-for="@Model.thePost.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Update" class="btn btn-primary" />
             </div>
         </form>
     </div>

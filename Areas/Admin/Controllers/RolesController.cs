@@ -70,7 +70,7 @@ namespace KSAdmin.Areas.Admin.Controllers
                 // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = _roleManager.Roles.ToList();
-                ChangeRoleViewModel model = new ChangeRoleViewModel
+                RoleChangeViewModel model = new RoleChangeViewModel
                 {
                     UserId = user.Id,
                     UserEmail = user.Email,
