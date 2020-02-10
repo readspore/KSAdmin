@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using KSAdmin.Models;
 using KSAdmin.Areas.Admin.Models;
-using KSAdmin.Interfaces;
 
 namespace KSAdmin.Controllers
 {

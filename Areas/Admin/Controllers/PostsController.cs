@@ -75,10 +75,10 @@ namespace KSAdmin.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 post.Creation = DateTime.Now.ToString("yyyyMMdd");
-                post.Slug = Slug.GetUniqSlug(
-                    (post.Slug.Trim().Length == 0 ? post.Title : post.Slug),
-                    _context.Categorys.Select(c => c.Slug).ToList()
-                );
+                var rawSlug = post.Slug == null | post.Slug?.Trim().Length != 0
+                            ? post.Title
+                            : post.Slug;
+                post.Slug = Slug.GetUniqSlug(rawSlug, _context.Posts.Select(c => c.Slug).ToList());
                 _context.Add(post);
                 var categoryIds = Request.Form["Categorys"];
                 if (categoryIds.Count() != 0)

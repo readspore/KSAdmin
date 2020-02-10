@@ -62,10 +62,10 @@ namespace KSAdmin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                category.Slug = Slug.GetUniqSlug(
-                    (category.Slug.Trim().Length == 0 ? category.Title : category.Slug),
-                    _context.Categorys.Select(c => c.Slug).ToList()
-                );
+                var rawSlug = category.Slug == null | category.Slug?.Trim().Length != 0
+                            ? category.Title
+                            : category.Slug;
+                category.Slug = Slug.GetUniqSlug(rawSlug, _context.Categorys.Select(c => c.Slug).ToList());
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -44,5 +44,7 @@ namespace KSAdmin.Models.Helpers
             }
             return slug;
         }
+
+        public static string foo = "bar";
     }
 }
