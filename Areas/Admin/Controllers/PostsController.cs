@@ -10,6 +10,7 @@ using KSAdmin.ViewModels;
 using KSAdmin.Areas.Admin.Models;
 using KSAdmin.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using KSAdmin.Models.Helpers;
 
 namespace KSAdmin.Areas.Admin.Controllers
 {
@@ -74,6 +75,10 @@ namespace KSAdmin.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 post.Creation = DateTime.Now.ToString("yyyyMMdd");
+                post.Slug = Slug.GetUniqSlug(
+                    (post.Slug.Trim().Length == 0 ? post.Title : post.Slug),
+                    _context.Categorys.Select(c => c.Slug).ToList()
+                );
                 _context.Add(post);
                 var categoryIds = Request.Form["Categorys"];
                 if (categoryIds.Count() != 0)
